@@ -93,35 +93,73 @@
 // === HEADER SCROLL ===
 (function headerScroll() {
     const header = document.getElementById('header');
+    if (!header) return;
+
     window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 40);
     });
 })();
 
-// === HAMBURGER ===
+// === HAMBURGER / MOBILE NAV ===
 (function mobileNav() {
     const btn = document.getElementById('hamburger');
     const nav = document.getElementById('navLinks');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+
     if (!btn || !nav) return;
 
-    btn.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        const spans = btn.querySelectorAll('span');
+    function openMenu() {
+        nav.classList.add('active');
+        btn.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Tutup menu');
+        document.body.classList.add('nav-open');
+
+        if (backdrop) {
+            backdrop.classList.add('active');
+        }
+    }
+
+    function closeMenu() {
+        nav.classList.remove('active');
+        btn.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Buka menu');
+        document.body.classList.remove('nav-open');
+
+        if (backdrop) {
+            backdrop.classList.remove('active');
+        }
+    }
+
+    function toggleMenu() {
         if (nav.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            closeMenu();
         } else {
-            spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+            openMenu();
+        }
+    }
+
+    btn.addEventListener('click', toggleMenu);
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeMenu);
+    }
+
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            closeMenu();
         }
     });
 
-    nav.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-            nav.classList.remove('active');
-            const spans = btn.querySelectorAll('span');
-            spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
-        });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
+        }
     });
 })();
 
@@ -129,9 +167,14 @@
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e) {
         const id = this.getAttribute('href');
-        if (id === '#') return;
+        if (id === '#') {
+            e.preventDefault();
+            return;
+        }
+
         const target = document.querySelector(id);
         if (!target) return;
+
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -193,6 +236,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+
         const nama = document.getElementById('nama').value.trim();
         const email = document.getElementById('email').value.trim();
         const subjek = document.getElementById('subjek').value.trim();
@@ -200,8 +244,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
         if (!nama || !email || !subjek || !pesan) {
             hideAlerts();
-            error.style.display = 'flex';
-            setTimeout(() => error.style.display = 'none', 5000);
+            if (error) {
+                error.style.display = 'flex';
+                setTimeout(() => error.style.display = 'none', 5000);
+            }
             return;
         }
 
@@ -216,9 +262,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         window.open(`https://wa.me/6281389876383?text=${msg}`, '_blank');
 
         hideAlerts();
-        success.style.display = 'flex';
+        if (success) {
+            success.style.display = 'flex';
+            setTimeout(() => success.style.display = 'none', 7000);
+        }
         form.reset();
-        setTimeout(() => success.style.display = 'none', 7000);
     });
 
     ['nama', 'email', 'subjek', 'pesan'].forEach(id => {
@@ -269,14 +317,19 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 // === GOLD CURSOR TRAIL ===
 (function cursorTrail() {
     if (window.innerWidth < 768) return;
+
     const trails = [];
     const max = 8;
 
     for (let i = 0; i < max; i++) {
         const dot = document.createElement('div');
         dot.style.cssText = `
-            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998;
-            transition: transform 0.1s ease; mix-blend-mode: screen;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.1s ease;
+            mix-blend-mode: screen;
         `;
         document.body.appendChild(dot);
         trails.push({ el: dot, x: 0, y: 0 });
@@ -291,6 +344,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
     function animateTrails() {
         let lx = mouseX, ly = mouseY;
+
         trails.forEach((trail, i) => {
             const ratio = (max - i) / max;
             const size = ratio * 8;
@@ -299,13 +353,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
             trail.x += (lx - trail.x) * 0.3;
             trail.y += (ly - trail.y) * 0.3;
 
-            trail.el.style.cssText += `
-                left: ${trail.x - size / 2}px;
-                top: ${trail.y - size / 2}px;
-                width: ${size}px;
-                height: ${size}px;
-                background: rgba(212, 168, 67, ${opacity});
-            `;
+            trail.el.style.left = `${trail.x - size / 2}px`;
+            trail.el.style.top = `${trail.y - size / 2}px`;
+            trail.el.style.width = `${size}px`;
+            trail.el.style.height = `${size}px`;
+            trail.el.style.background = `rgba(212, 168, 67, ${opacity})`;
 
             lx = trail.x;
             ly = trail.y;

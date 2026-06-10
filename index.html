@@ -23,9 +23,13 @@
                     <span class="logo-h">HENRI</span><span class="logo-a">ARDIANTO</span>
                     <span class="logo-dot">◆</span>
                 </a>
-                <div class="hamburger" id="hamburger">
-                    <span></span><span></span><span></span>
-                </div>
+
+                <button class="hamburger" id="hamburger" type="button" aria-label="Buka menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">Tentang</a></li>
@@ -35,6 +39,8 @@
                     <li><a href="#contact">Kontak</a></li>
                 </ul>
             </nav>
+
+            <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
         </div>
     </header>
 
@@ -93,7 +99,7 @@
                     <a href="#portfolio" class="btn btn-gold"><i class="fas fa-code"></i> Lihat Portfolio</a>
                     <a href="#contact" class="btn btn-gold"><i class="fas fa-paper-plane"></i> Kontak Saya</a>
                     <a href="#certificates" class="btn btn-outline"><i class="fas fa-award"></i> Sertifikat</a>
-                    <a href="assets/CV Henri Ardianto.pdf" target="_blank" class="btn btn-outline"><i class="fas fa-download"></i> CV Saya</a>
+                    <a href="assets/CV Henri Ardianto.pdf?v=1748885063" target="_blank" class="btn btn-outline"><i class="fas fa-download"></i> CV Saya</a>
                 </div>
             </div>
         </div>
@@ -273,7 +279,7 @@
         </div>
     </section>
 
-    <!-- Portfolio -->
+   <!-- Portfolio -->
     <section class="portfolio" id="portfolio">
         <div class="container">
             <div class="section-header">
@@ -333,9 +339,9 @@
                     <div class="card-img-wrap">
                         <img src="assets/pustaka-booking-banner.png" alt="Pustaka Booking" class="card-img">
                         <div class="card-overlay">
-                            <a href="#" class="overlay-btn">
-                                <i class="fas fa-external-link-alt"></i> Buka Proyek
-                            </a>
+                            <button type="button" class="overlay-btn overlay-btn-disabled" disabled>
+                                <i class="fas fa-clock"></i> Coming Soon
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -344,9 +350,33 @@
                         <p>Aplikasi perpustakaan berbasis web dengan fitur login, peminjaman buku, dan manajemen data menggunakan CodeIgniter.</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-gold btn-sm">
-                            <i class="fas fa-eye"></i> Lihat Detail
-                        </a>
+                        <button type="button" class="btn btn-outline btn-sm btn-disabled" disabled>
+                            <i class="fas fa-clock"></i> Coming Soon
+                        </button>
+                    </div>
+                </div>
+
+                <div class="portfolio-card portfolio-card-coming-soon">
+                    <div class="card-img-wrap">
+                        <img src="assets/NaturaBook-Banner.png" alt="NaturaBook" class="card-img">
+
+                        <div class="card-overlay">
+                            <button type="button" class="overlay-btn overlay-btn-disabled" disabled>
+                                <i class="fas fa-clock"></i> Coming Soon
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-tech">Laravel · PostgreSQL · Filament · Midtrans</div>
+                        <h3>NaturaBook</h3>
+                        <p>Sistem reservasi wisata online untuk tiket, penginapan, camping, pembayaran digital, tiket otomatis, dan admin panel.</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-outline btn-sm btn-disabled" disabled>
+                            <i class="fas fa-clock"></i> Coming Soon
+                        </button>
                     </div>
                 </div>
             </div>
