@@ -186,13 +186,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (!el) return;
 
     const texts = [
-        'IT Support Specialist',
-        'Helpdesk Technician',
-        'Hardware Troubleshooting',
-        'Software Troubleshooting',
-        'Network Troubleshooting',
+        'Laravel Web Developer',
         'PHP Developer',
-        'MySQL Database'
+        'Filament Admin Panel',
+        'Payment Gateway Integration',
+        'Company Profile Website',
+        'Academic Project Website',
+        'IT Support Specialist',
+        'Linux Server Deployment'
     ];
 
     let idx = 0, charIdx = 0, deleting = false;
@@ -253,7 +254,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
         const msg = encodeURIComponent(
             `*Halo Henri Ardianto*,\n\n` +
-            `Saya *${nama}* ingin menghubungi Anda.\n\n` +
+            `Saya *${nama}* ingin menghubungi Anda untuk diskusi kerja sama / pembuatan website.\n\n` +
             `*Email:* ${email}\n` +
             `*Subjek:* ${subjek}\n\n` +
             `*Pesan:*\n${pesan}\n\nTerima kasih.`
